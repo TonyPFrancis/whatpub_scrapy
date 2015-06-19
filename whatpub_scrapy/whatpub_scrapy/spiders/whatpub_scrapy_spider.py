@@ -75,3 +75,4 @@ class WhatpubSpider(Spider):
         pub_id = pub_id[0] if pub_id else ''
         params = {'PubID':pub_id}
         pub_response = requests.post(url=get_pub_info_url, data=params)
+        json_data = json.loads(pub_response.content)
