@@ -40,7 +40,9 @@ class WhatpubSpider(Spider):
                       'p':'1',
                       'features':'Pub,RealAle,Open'}
             search_url = search_url+'?%s'%(urllib.urlencode(params))
-            yield Request(url = search_url, callback=self.parse_venue_list, dont_filter=True)\
+            yield Request(url=search_url, callback=self.parse_venue_list, dont_filter=True)
 
     def parse_venue_list(self, response):
         sel = Selector(response)
+
+        VENUE_LIST_XPATH = '//article[@class="pubs"]/section[@class="pub"]/a/@href'
