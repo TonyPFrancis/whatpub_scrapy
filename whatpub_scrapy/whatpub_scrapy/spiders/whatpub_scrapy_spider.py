@@ -69,7 +69,9 @@ class WhatpubSpider(Spider):
         sel = Selector(response)
 
         PUB_ID_XPATH = '//article[@id="pub"]/@data-id'
-        ADDRESS_XPATH =
 
+        get_pub_info_url = 'http://whatpub.com/api/1/GetPubDetails'
         pub_id = sel.xpath(PUB_ID_XPATH).extract()
-        pub_id = pub_id[0].split('/')[1] if pub_id else ''
+        pub_id = pub_id[0] if pub_id else ''
+        params = {'PubID':pub_id}
+        pub_response = requests.post(url=get_pub_info_url, data=params)
