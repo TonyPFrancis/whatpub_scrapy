@@ -82,3 +82,9 @@ class WhatpubSpider(Spider):
         website = response.get('Website', '')
         venue_name = response.get('Name', '')
         venue_url = response.url
+
+        item = WhatpubScrapyItem(address = address,
+                                 website = website,
+                                 venue_name = venue_name,
+                                 venue_url = venue_url)
+        yield item
