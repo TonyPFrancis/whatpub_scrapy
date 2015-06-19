@@ -14,4 +14,4 @@ class WhatpubScrapyItem(Item):
     address = Field()
     website = Field()
     venue_name = Field()
-
+    venue_url = Field()
