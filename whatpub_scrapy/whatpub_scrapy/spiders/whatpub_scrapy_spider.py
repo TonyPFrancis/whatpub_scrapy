@@ -51,14 +51,15 @@ class WhatpubSpider(Spider):
         if venue_list:
             for venue_item in venue_list:
                 venue_item = venue_item if venue_item.startswith('http') else self.BASE_URL+venue_item
-                yield Request(url = venue_item, callback=self.parse_venues)
+                yield Request(url=venue_item, callback=self.parse_venues)
         else:
             return
 
         NEXT_URL_XPATH = '//a[@title="More"]/@href'
         next_url = sel.xpath(NEXT_URL_XPATH).extract()
         next_url = self.BASE_URL+next_url[0] if next_url else ''
-
+        if next_url:
+            yield Request(url=next_url, callback=self.parse_venue_list, dont_filter=True)
 
     def parse_venues(self, response):
         item = WhatpubScrapyItem(venue_url = response.url)
