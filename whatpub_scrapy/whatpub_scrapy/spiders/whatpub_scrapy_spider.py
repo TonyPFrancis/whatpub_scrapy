@@ -79,3 +79,4 @@ class WhatpubSpider(Spider):
 
         response = json_data.get('response', {})
         address = ', '.join(filter(None,[response.get('Street', ''), response.get('District', ''), response.get('Town', ''), response.get('Posttown', ''), response.get('Postcode', '')]))
+        website = response.get('Website', '')
