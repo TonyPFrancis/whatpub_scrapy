@@ -55,6 +55,8 @@ class WhatpubSpider(Spider):
         else:
             return
 
+        NEXT_URL_XPATH = '//a[@title="More"]/@href'
+
     def parse_venues(self, response):
         item = WhatpubScrapyItem(venue_url = response.url)
         yield item
