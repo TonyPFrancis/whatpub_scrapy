@@ -77,10 +77,10 @@ class WhatpubSpider(Spider):
         pub_response = requests.post(url=get_pub_info_url, data=params)
         json_data = json.loads(pub_response.content)
 
-        response = json_data.get('response', {})
-        address = ', '.join(filter(None,[response.get('Street', ''), response.get('District', ''), response.get('Town', ''), response.get('Posttown', ''), response.get('Postcode', '')]))
-        website = response.get('Website', '')
-        venue_name = response.get('Name', '')
+        json_response = json_data.get('response', {})
+        address = ', '.join(filter(None,[json_response.get('Street', ''), json_response.get('District', ''), json_response.get('Town', ''), json_response.get('Posttown', ''), json_response.get('Postcode', '')]))
+        website = json_response.get('Website', '')
+        venue_name = json_response.get('Name', '')
         venue_url = response.url
 
         item = WhatpubScrapyItem(address = address,
