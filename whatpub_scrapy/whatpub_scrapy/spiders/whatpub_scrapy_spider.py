@@ -33,3 +33,6 @@ class WhatpubSpider(Spider):
     def parse(self, response):
         zip_file = open('ukpostcodes.txt', 'r+')
         zip_list = filter(None, list(set(zip_file.read().split('\n'))))
+        for zip_item in ['AB101XG', 'AB106RN']:
+            search_url = 'http://whatpub.com/search'
+            
