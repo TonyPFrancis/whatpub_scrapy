@@ -15,3 +15,6 @@ NEWSPIDER_MODULE = 'whatpub_scrapy.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'whatpub_scrapy (+http://www.yourdomain.com)'
+
+DOWNLOAD_TIMEOUT = 360
+AUTOTHROTTLE_ENABLED = True
