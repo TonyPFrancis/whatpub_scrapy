@@ -51,7 +51,7 @@ class WhatpubSpider(Spider):
         if venue_list:
             for venue_item in venue_list:
                 venue_item = venue_item if venue_item.startswith('http') else self.BASE_URL+venue_item
-                yield Request(url=venue_item, callback=self.parse_venues)
+                yield Request(url=venue_item, callback=self.parse_venue)
         else:
             return
 
@@ -64,3 +64,8 @@ class WhatpubSpider(Spider):
     def parse_venues(self, response):
         item = WhatpubScrapyItem(venue_url = response.url)
         yield item
+
+    def parse_venue(self, response):
+        sel = Selector(response)
+
+        
