@@ -70,3 +70,6 @@ class WhatpubSpider(Spider):
 
         PUB_ID_XPATH = '//article[@id="pub"]/@data-id'
         ADDRESS_XPATH =
+
+        pub_id = sel.xpath(PUB_ID_XPATH).extract()
+        pub_id = pub_id[0].split('/')[1] if pub_id else ''
