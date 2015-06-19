@@ -29,3 +29,7 @@ class WhatpubSpider(Spider):
         ScrapyFileLogObserver(open("spider.log", 'w'), level=log.INFO).start()
         ScrapyFileLogObserver(open("spider_error.log", 'w'), level=log.ERROR).start()
         super(WhatpubSpider, self).__init__(name, **kwargs)
+
+    def parse(self, response):
+        zip_file = open('ukpostcodes.txt', 'r+')
+        zip_list = filter(None, list(set(zip_file.read().split('\n'))))
