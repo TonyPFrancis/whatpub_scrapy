@@ -39,3 +39,4 @@ class WhatpubSpider(Spider):
                       't':'ft',
                       'p':'1',
                       'features':'Pub,RealAle,Open'}
+            search_url = search_url+'?%s'%(urllib.urlencode(params))
