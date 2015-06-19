@@ -46,3 +46,5 @@ class WhatpubSpider(Spider):
         sel = Selector(response)
 
         VENUE_LIST_XPATH = '//article[@class="pubs"]/section[@class="pub"]/a/@href'
+
+        venue_list = sel.xpath(VENUE_LIST_XPATH).extract()
