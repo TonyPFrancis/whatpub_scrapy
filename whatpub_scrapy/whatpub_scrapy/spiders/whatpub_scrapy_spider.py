@@ -19,3 +19,13 @@ import time
 import json
 
 class WhatpubSpider(Spider):
+    name = 'whatpub'
+    start_urls = ['http://whatpub.com', ]
+    allowed_domains = ['whatpub.com']
+    TIMEZONE = ''
+    BASE_URL = 'http://whatpub.com'
+
+    def __init__(self, name=None, **kwargs):
+        ScrapyFileLogObserver(open("spider.log", 'w'), level=log.INFO).start()
+        ScrapyFileLogObserver(open("spider_error.log", 'w'), level=log.ERROR).start()
+        super(WhatpubSpider, self).__init__(name, **kwargs)
