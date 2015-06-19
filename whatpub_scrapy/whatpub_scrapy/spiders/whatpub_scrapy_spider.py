@@ -48,3 +48,13 @@ class WhatpubSpider(Spider):
         VENUE_LIST_XPATH = '//article[@class="pubs"]/section[@class="pub"]/a/@href'
 
         venue_list = sel.xpath(VENUE_LIST_XPATH).extract()
+        if venue_list:
+            for venue_item in venue_list:
+                venue_item = venue_item if venue_item.startswith('http') else self.BASE_URL+venue_item
+                yield Request(url = venue_item, callback=self.parse_venues)
+        else:
+            return
+
+    def parse_venues(self, response):
+        item = WhatpubScrapyItem(venue_url = response.url)
+        yield item
