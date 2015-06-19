@@ -68,4 +68,5 @@ class WhatpubSpider(Spider):
     def parse_venue(self, response):
         sel = Selector(response)
 
-        
+        PUB_ID_XPATH = '//article[@id="pub"]/@data-id'
+        ADDRESS_XPATH =
