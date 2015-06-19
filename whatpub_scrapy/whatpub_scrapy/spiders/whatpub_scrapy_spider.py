@@ -35,4 +35,7 @@ class WhatpubSpider(Spider):
         zip_list = filter(None, list(set(zip_file.read().split('\n'))))
         for zip_item in ['AB101XG', 'AB106RN']:
             search_url = 'http://whatpub.com/search'
-            
+            params = {'q':'%s'%(zip_item),
+                      't':'ft',
+                      'p':'1',
+                      'features':'Pub,RealAle,Open'}
