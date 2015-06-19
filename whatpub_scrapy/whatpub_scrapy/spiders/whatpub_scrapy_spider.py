@@ -76,3 +76,6 @@ class WhatpubSpider(Spider):
         params = {'PubID':pub_id}
         pub_response = requests.post(url=get_pub_info_url, data=params)
         json_data = json.loads(pub_response.content)
+
+        response = json_data.get('response', {})
+        address = ', '.join(filter(None,[response.get('Street', ''), response.get('District', ''), response.get('Town', ''), response.get('Posttown', ''), response.get('Postcode', '')]))
