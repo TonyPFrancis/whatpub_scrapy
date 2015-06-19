@@ -81,3 +81,4 @@ class WhatpubSpider(Spider):
         address = ', '.join(filter(None,[response.get('Street', ''), response.get('District', ''), response.get('Town', ''), response.get('Posttown', ''), response.get('Postcode', '')]))
         website = response.get('Website', '')
         venue_name = response.get('Name', '')
+        venue_url = response.url
