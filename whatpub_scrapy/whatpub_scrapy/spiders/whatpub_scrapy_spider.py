@@ -23,7 +23,7 @@ class WhatpubSpider(Spider):
 
     def parse(self, response):
         zip_file = open('ukpostcodes.txt', 'r+')
-        zip_list = filter(None, list(set(zip_file.read().split('\n'))))
+        zip_list = zip_file.read().split('\n')
         for zip_item in zip_list:
             search_url = 'http://whatpub.com/search'
             params = {'q':'%s'%(zip_item),
