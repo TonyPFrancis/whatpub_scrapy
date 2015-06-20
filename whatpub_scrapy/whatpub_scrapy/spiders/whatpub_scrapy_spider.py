@@ -24,6 +24,7 @@ class WhatpubSpider(Spider):
     def parse(self, response):
         zip_file = open('ukpostcodes.txt', 'r+')
         zip_list = zip_file.read().split('\n')
+        print "*** LENGTH OF ZIP LIST = %s"%(len(zip_list))
         for zip_item in zip_list:
             search_url = 'http://whatpub.com/search'
             params = {'q':'%s'%(zip_item),
@@ -31,17 +32,23 @@ class WhatpubSpider(Spider):
                       'p':'1',
                       'features':'Pub,RealAle,Open'}
             search_url = search_url+'?%s'%(urllib.urlencode(params))
-            yield Request(url=search_url, callback=self.parse_venue_list, dont_filter=True)
+            print "*** ZIP ITEM = %s"%(zip_item)
+            meta_data = {'zip_item' : zip_item}
+            yield Request(url=search_url, callback=self.parse_venue_list, dont_filter=True, meta=meta_data)
 
     def parse_venue_list(self, response):
         sel = Selector(response)
+        meta_data = response.meta
+        zip_item = meta_data['zip_item']
 
         VENUE_LIST_XPATH = '//article[@class="pubs"]/section[@class="pub"]/a/@href'
 
         venue_list = sel.xpath(VENUE_LIST_XPATH).extract()
+        print "*** VENUE LIST OF %s is \n%s"%(zip_item, venue_list)
         if venue_list:
             for venue_item in venue_list:
                 venue_item = venue_item if venue_item.startswith('http') else self.BASE_URL+venue_item
+                print "*** VENUE ITEM : %s"%(venue_item)
                 yield Request(url=venue_item, callback=self.parse_venue)
         else:
             return
@@ -49,8 +56,9 @@ class WhatpubSpider(Spider):
         NEXT_URL_XPATH = '//a[@title="More"]/@href'
         next_url = sel.xpath(NEXT_URL_XPATH).extract()
         next_url = self.BASE_URL+next_url[0] if next_url else ''
+        print "*** NEXT URL : %s"%(next_url)
         if next_url:
-            yield Request(url=next_url, callback=self.parse_venue_list, dont_filter=True)
+            yield Request(url=next_url, callback=self.parse_venue_list, dont_filter=True, meta=meta_data)
 
     def parse_venues(self, response):
         item = WhatpubScrapyItem(venue_url = response.url)
@@ -78,4 +86,5 @@ class WhatpubSpider(Spider):
                                  website = website,
                                  venue_name = venue_name,
                                  venue_url = venue_url)
+        print "*** VENUE URl : %s"%(response.url)
         yield item
