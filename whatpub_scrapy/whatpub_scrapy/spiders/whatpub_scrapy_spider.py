@@ -8,6 +8,7 @@ from scrapy.http import Request, FormRequest
 from scrapy.log import ScrapyFileLogObserver
 from scrapy import log
 import json
+from time import sleep
 
 class WhatpubSpider(Spider):
     name = 'whatpub'
@@ -34,6 +35,8 @@ class WhatpubSpider(Spider):
             search_url = search_url+'?%s'%(urllib.urlencode(params))
             print "*** ZIP ITEM = %s"%(zip_item)
             meta_data = {'zip_item' : zip_item}
+            if zip_list.index(zip_item) % 100000 == 0:
+                sleep(10*60)
             yield Request(url=search_url, callback=self.parse_venue_list, dont_filter=True, meta=meta_data)
 
     def parse_venue_list(self, response):
